@@ -1,0 +1,6 @@
+@TestingHTTPie_HostAddress = http://localhost:5043
+
+GET {{TestingHTTPie_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
