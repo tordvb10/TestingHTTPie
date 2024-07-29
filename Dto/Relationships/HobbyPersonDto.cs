@@ -8,4 +8,4 @@ namespace TestingHTTPie.Dto
         public PersonDto Person { get; set; }
         public HobbyPersonDto() { }
     }
-}|
+}

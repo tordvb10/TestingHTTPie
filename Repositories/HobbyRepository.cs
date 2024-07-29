@@ -1,10 +1,17 @@
-﻿using TestingHTTPie.Interfaces;
+﻿using TestingHTTPie.Data;
+using TestingHTTPie.Interfaces;
 using TestingHTTPie.Models;
 
 namespace TestingHTTPie.Repositories
 {
     public class HobbyRepository : IHobbyRepository
     {
+        private readonly ContextTestingHTTPie _contextTestingHTTPie;
+        
+        public HobbyRepository(ContextTestingHTTPie contextTestingHTTPie)
+        {
+            _contextTestingHTTPie = contextTestingHTTPie;
+        }
         public Task<bool> CreateHobbyAsync(Hobby Hobby)
         {
             throw new NotImplementedException();
