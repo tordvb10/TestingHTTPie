@@ -12,6 +12,13 @@ namespace TestingHTTPie.Controllers
     [ApiController]
     public class HobbyController : Controller
     {
+        private readonly IHobbyRepository _hobbyRepository;
+        private readonly IMapper _mapper;
 
+        public HobbyController(IHobbyRepository hobbyRepository, IMapper mapper)
+        {
+            _hobbyRepository = hobbyRepository;
+            _mapper = mapper;
+        }
     }
 }
