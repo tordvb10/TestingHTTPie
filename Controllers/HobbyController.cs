@@ -58,7 +58,25 @@ namespace TestingHTTPie.Controllers
             return Ok("Successfully created.");
         }
 
-        //[HttpDelete]
+        [HttpDelete("{hobbyId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteHobby(Guid hobbyId)
+        {
+            if (!await _hobbyRepository.HobbyExistsAsync(hobbyId)) return NotFound("Hobby not found.");
+            var deleteHobby = await _hobbyRepository.GetHobbyAsync(hobbyId);
+            if (deleteHobby == null) return NotFound("Hobby not found.");
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!await _hobbyRepository.DeleteHobbyAsync(deleteHobby))
+            {
+                ModelState.AddModelError("", "Something went wrong while deleting Employee.");
+                return BadRequest(ModelState);
+            }
+            return NoContent();
+        }
+
+
 
         [HttpGet("{hobbyId}")]
         [ProducesResponseType(200, Type = typeof(HobbyDto))]
