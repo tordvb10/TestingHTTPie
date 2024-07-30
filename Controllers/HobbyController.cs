@@ -74,9 +74,27 @@ namespace TestingHTTPie.Controllers
 
         [HttpPut("{hobbyId}")]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdateHobby(Guid hobbyId, [FromBody] HobbyDto updateHobbyDto)
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateHobby(Guid hobbyId, [FromBody] HobbyDto updateNEWHobbyDto)
         {
-            return NoContent();
+            try
+            {
+                var updateOLDHobby = await _hobbyRepository.GetHobbyAsync(hobbyId);
+                if (updateOLDHobby == null) return NotFound("Hobby not found.");
+                _mapper.Map(updateNEWHobbyDto, updateOLDHobby);
+                if (!await _hobbyRepository.UpdateHobbyAsync(updateOLDHobby))
+                    return StatusCode(500, "Failed to update Hobby.");
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(409, "Concurrency conflict occurred. Please retry the operation.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred while updating the Employee: {ex.Message}");
+            }
         }
 
     }
