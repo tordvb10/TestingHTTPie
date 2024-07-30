@@ -33,11 +33,12 @@ namespace TestingHTTPie.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(422)]
         [ProducesResponseType(400)]
-
         public async Task<IActionResult> CreateHobby([FromBody] HobbyDto createHobbyDto)
         {
             if (createHobbyDto == null | !ModelState.IsValid) return BadRequest(ModelState);

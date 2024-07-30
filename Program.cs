@@ -34,6 +34,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 //builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IHobbyRepository, HobbyRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
