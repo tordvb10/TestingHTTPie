@@ -46,12 +46,15 @@ namespace TestingHTTPie.Repositories
 
         public async Task<ICollection<Hobby>> GetHobbiesAsync()
         {
-            return await _contextTestingHTTPie.Hobbies.ToListAsync();
+            return await _contextTestingHTTPie.Hobbies
+                .Include(h => h.HobbyPersons).ThenInclude(hp => hp.Person)
+                .ToListAsync();
         }
 
         public async Task<Hobby> GetHobbyAsync(Guid id)
         {
             return await _contextTestingHTTPie.Hobbies
+                .Include(h => h.HobbyPersons).ThenInclude(hp => hp.Person)
                 .FirstOrDefaultAsync(e => e.Id == id)
                 ?? throw new InvalidOperationException($"Entity with id '{id}' not found.");
         }
