@@ -123,16 +123,6 @@ namespace TestingHTTPie.Controllers
             }
         }
 
-        [HttpGet("{hobbyId}/Person")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<HobbyPersonDto>))]
-        [ProducesResponseType(500)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> GetHobbyPersons()
-        {
-            var getHobbiesDto = _mapper.Map<ICollection<Hobby>, List<HobbyDto>>(await _hobbyRepository.GetHobbiesAsync());
-            return (!ModelState.IsValid) ? BadRequest(ModelState) : Ok(getHobbiesDto);
-        }
 
         [HttpPost("{hobbyId}/Person/{personId}")]
         [ProducesResponseType(200)]
