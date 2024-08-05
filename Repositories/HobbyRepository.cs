@@ -40,7 +40,11 @@ namespace TestingHTTPie.Repositories
 
         public async Task<bool> DeleteHobbyAsync(Hobby hobby)
         {
+            var hobbypersons = await _contextTestingHTTPie.HobbyPersons
+                .AnyAsync(hp => hp.HobbyId == hobbyId);
+            _contextTestingHTTPie.HobbyPersons.RemoveRange(hobbypersons);
             _contextTestingHTTPie.Hobbies.Remove(hobby);
+            await RemoveRelHobbyPersonAsync(hobby.Id)
             return await SaveAsync();
         }
 
