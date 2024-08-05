@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TestingHTTPie.Models;
-.
+
 namespace TestingHTTPie.Data
 {
     public class ContextTestingHTTPie : DbContext
