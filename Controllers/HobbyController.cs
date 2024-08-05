@@ -135,6 +135,7 @@ namespace TestingHTTPie.Controllers
         }
 
         [HttpPost("{hobbyId}/Person/{personId}")]
+        [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
         [ProducesResponseType(404)]
