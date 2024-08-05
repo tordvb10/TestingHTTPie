@@ -8,6 +8,8 @@ namespace TestingHTTPie.Helper
         public MappingProfiles()
         {
             CreateMap<Hobby, HobbyDto>()
+                .ForMember(dest => dest.Persons, 
+                    opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Person)))
                 .ReverseMap()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());

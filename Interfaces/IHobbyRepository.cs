@@ -7,7 +7,6 @@ namespace TestingHTTPie.Interfaces
 {
     public interface IHobbyRepository
     {
-
         Task<bool> CreateHobbyAsync(Hobby Hobby);
         Task<bool> DeleteHobbyAsync(Hobby Hobby);
         Task<Hobby> GetHobbyAsync(Guid id);
@@ -15,6 +14,11 @@ namespace TestingHTTPie.Interfaces
         Task<bool> HobbyExistsAsync(Guid id);
         Task<bool> SaveAsync();
         Task<bool> UpdateHobbyAsync(Hobby Hobby);
+
+        //Relation to Person
+        Task<bool> HobbyPersonExistsAsync(Guid hobbyId, Guid personId);
+        Task<bool> RemoveRelHobbyPersonAsync(Guid hobbyId, Guid personId);
+        Task<bool> AddRelHobbyPersonAsync(Guid hobbyId, Guid personId);
 
     }
 }

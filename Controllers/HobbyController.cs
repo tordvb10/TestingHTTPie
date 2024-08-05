@@ -13,11 +13,16 @@ namespace TestingHTTPie.Controllers
     public class HobbyController : Controller
     {
         private readonly IHobbyRepository _hobbyRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly IMapper _mapper;
 
-        public HobbyController(IHobbyRepository hobbyRepository, IMapper mapper)
+        public HobbyController(
+            IHobbyRepository hobbyRepository, 
+            IPersonRepository personRepository, 
+            IMapper mapper)
         {
             _hobbyRepository = hobbyRepository;
+            _personRepository = personRepository;
             _mapper = mapper;
         }
 
@@ -47,7 +52,7 @@ namespace TestingHTTPie.Controllers
                 .FirstOrDefault();
             if (createHobbyExists != null)
             {
-                ModelState.AddModelError("", "Employee already exists.");
+                ModelState.AddModelError("", "Hobby already exists.");
                 return StatusCode(422, ModelState);
             }
             var createHobby = _mapper.Map<HobbyDto, Hobby>(createHobbyDto);
@@ -87,7 +92,7 @@ namespace TestingHTTPie.Controllers
         public async Task<IActionResult> GetHobby(Guid hobbyId)
         {
             if (!await _hobbyRepository.HobbyExistsAsync(hobbyId)) return NotFound();
-            var getHobbyDto = _mapper.Map<Hobby,HobbyDto>(await _hobbyRepository.GetHobbyAsync(hobbyId));
+            var getHobbyDto = _mapper.Map<Hobby, HobbyDto>(await _hobbyRepository.GetHobbyAsync(hobbyId));
             return (!ModelState.IsValid) ? BadRequest(ModelState) : Ok(getHobbyDto);
         }
 
@@ -95,6 +100,8 @@ namespace TestingHTTPie.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateHobby(Guid hobbyId, [FromBody] HobbyDto updateNEWHobbyDto)
         {
             try
@@ -115,6 +122,43 @@ namespace TestingHTTPie.Controllers
                 return StatusCode(500, $"An error occurred while updating the Employee: {ex.Message}");
             }
         }
+
+        [HttpGet("{hobbyId}/Person")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<HobbyPersonDto>))]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetHobbyPersons()
+        {
+            var getHobbiesDto = _mapper.Map<ICollection<Hobby>, List<HobbyDto>>(await _hobbyRepository.GetHobbiesAsync());
+            return (!ModelState.IsValid) ? BadRequest(ModelState) : Ok(getHobbiesDto);
+        }
+
+        [HttpPost("{hobbyId}/Person/{personId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(422)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> CreateHobbyPerson(Guid hobbyId, Guid personId)
+        {
+            if (hobbyId == Guid.Empty | personId == Guid.Empty) return BadRequest(ModelState);
+            if (!await _hobbyRepository.HobbyExistsAsync(hobbyId)) return NotFound("Hobby not found.");
+            if (!await _personRepository.PersonExistsAsync(personId)) return NotFound("Person not found.");
+            if (await _hobbyRepository.HobbyPersonExistsAsync(hobbyId, personId))
+            {
+                ModelState.AddModelError("", "HobbyPerson already exists.");
+                return StatusCode(422, ModelState);
+            }
+            if (!await _hobbyRepository.AddRelHobbyPersonAsync(hobbyId,personId))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving.");
+                return StatusCode(500, ModelState);
+            }
+            return Ok("Successfully created.");
+        }
+
+
 
     }
 }

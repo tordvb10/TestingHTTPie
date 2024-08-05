@@ -105,5 +105,27 @@ namespace TestingHTTPie.Repositories
                 throw; // Re-throw to let the caller handle it
             }
         }
+
+        public async Task<bool> HobbyPersonExistsAsync(Guid hobbyId, Guid personId)
+        {
+            return await _contextTestingHTTPie.HobbyPersons
+                .AnyAsync(hp => hp.HobbyId == hobbyId && hp.PersonId == personId);
+        }
+
+        public async Task<bool> RemoveRelHobbyPersonAsync(Guid hobbyId, Guid personId)
+        {
+            var hobbyperson = await _contextTestingHTTPie.HobbyPersons
+                .FirstOrDefaultAsync(hp => hp.HobbyId == hobbyId && hp.PersonId == personId);
+            if (hobbyperson == null)  return false; 
+            _contextTestingHTTPie.HobbyPersons.Remove(hobbyperson);
+            return await SaveAsync();
+        }
+
+        public async Task<bool> AddRelHobbyPersonAsync(Guid hobbyId, Guid personId)
+        {
+            if(await HobbyPersonExistsAsync(hobbyId,personId)) return false;
+            await _contextTestingHTTPie.HobbyPersons.AddAsync(new HobbyPerson { HobbyId = hobbyId, PersonId = personId });
+            return await SaveAsync();
+        }
     }
 }
