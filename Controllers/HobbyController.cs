@@ -97,8 +97,8 @@ namespace TestingHTTPie.Controllers
         }
 
         [HttpPut("{hobbyId}")]
-        [ProducesResponseType(400)]
         [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
@@ -122,10 +122,23 @@ namespace TestingHTTPie.Controllers
                 return StatusCode(500, $"An error occurred while updating the Employee: {ex.Message}");
             }
         }
-        
 
-        [HttpPost("{hobbyId}/Person/{personId}")]
-        [ProducesResponseType(200)]
+
+        [HttpGet("Person")]
+
+
+        [HttpGet("Person/{hobbyId}/{personId}")]
+        [ProducesResponseType(200, Type = typeof([HobbyPersonDto]))]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult>
+
+
+
+
+        [HttpPost("Person/{hobbyId}/{personId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(500)]
         [ProducesResponseType(404)]
