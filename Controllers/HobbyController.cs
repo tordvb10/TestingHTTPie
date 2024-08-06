@@ -128,13 +128,25 @@ namespace TestingHTTPie.Controllers
 
 
         [HttpGet("Person/{hobbyId}/{personId}")]
-        [ProducesResponseType(200, Type = typeof([HobbyPersonDto]))]
-        [ProducesResponseType(500)]
+        [ProducesResponseType(200, Type = typeof(HobbyPersonDto))]
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult>
+        public async Task<IActionResult> GetHobbyPerson(Guid hobbyId, Guid personId)
+        {
+            if (hobbyId == Guid.Empty | personId == Guid.Empty) return BadRequest(ModelState);
+            if (!await _hobbyRepository.HobbyExistsAsync(hobbyId)) return NotFound("Hobby not found.");
+            if (!await _personRepository.PersonExistsAsync(personId)) return NotFound("Person not found.");
+            if (!await _hobbyRepository.HobbyPersonExistsAsync(hobbyId,personId)) return NotFound("HobbyPerson not found.");
+            var getHobbyPerson = await _hobbyRepository.GetRelHobbyPersonAsync(hobbyId, personId);
+            Console.WriteLine("HEIHEIHEIHEIHEIHEI");
+            Console.WriteLine(getHobbyPerson);
+            Console.WriteLine("HEIHEIHEIHEIHEIHEI2222222");
+            var getHobbyPersonDto = _mapper.Map<HobbyPersonDto>(getHobbyPerson);
 
+            return Ok(getHobbyPersonDto);
+
+        }
 
 
 

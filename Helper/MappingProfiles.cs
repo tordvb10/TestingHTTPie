@@ -19,6 +19,10 @@ namespace TestingHTTPie.Helper
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
+            CreateMap<HobbyPerson, HobbyPersonDto>()
+                .ForMember(dest => dest.Hobby, opt => opt.MapFrom(src => src.Hobby))
+                .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.Person));
+
         }
     }
 }

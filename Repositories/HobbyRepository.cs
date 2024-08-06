@@ -138,7 +138,11 @@ namespace TestingHTTPie.Repositories
             return await SaveAsync();
         }
 
-
+        public async Task<HobbyPerson> GetRelHobbyPersonAsync(Guid hobbyId, Guid personId)
+        {
+            return await _contextTestingHTTPie.HobbyPersons
+                .FirstOrDefaultAsync(hp => hp.HobbyId == hobbyId && hp.PersonId == personId);
+        }
 
 
     }
