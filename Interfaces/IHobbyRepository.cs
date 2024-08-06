@@ -19,6 +19,7 @@ namespace TestingHTTPie.Interfaces
         Task<bool> HobbyPersonExistsAsync(Guid hobbyId, Guid personId);
         Task<bool> RemoveRelHobbyPersonAsync(Guid hobbyId, Guid personId);
         Task<bool> AddRelHobbyPersonAsync(Guid hobbyId, Guid personId);
+        Task<HobbyPerson> GetRelHobbyPersonAsync(Guid hobbyId, Guid personId);
 
     }
 }
