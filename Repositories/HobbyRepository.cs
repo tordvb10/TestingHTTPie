@@ -141,7 +141,14 @@ namespace TestingHTTPie.Repositories
         public async Task<HobbyPerson> GetRelHobbyPersonAsync(Guid hobbyId, Guid personId)
         {
             return await _contextTestingHTTPie.HobbyPersons
+                .Include(hp => hp.Hobby)
+                .Include(hp => hp.Person)
                 .FirstOrDefaultAsync(hp => hp.HobbyId == hobbyId && hp.PersonId == personId);
+
+            
+                //.Include(h => h.HobbyPersons).ThenInclude(hp => hp.Person)
+                //.FirstOrDefaultAsync(e => e.Id == id)
+
         }
 
 

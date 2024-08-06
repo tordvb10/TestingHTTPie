@@ -142,7 +142,7 @@ namespace TestingHTTPie.Controllers
             Console.WriteLine("HEIHEIHEIHEIHEIHEI");
             Console.WriteLine(getHobbyPerson);
             Console.WriteLine("HEIHEIHEIHEIHEIHEI2222222");
-            var getHobbyPersonDto = _mapper.Map<HobbyPersonDto>(getHobbyPerson);
+            var getHobbyPersonDto = _mapper.Map<HobbyPersonDto>(getHobbyPerson, opt => opt.Items["SourceType"] = typeof(HobbyPerson));
 
             return Ok(getHobbyPersonDto);
 

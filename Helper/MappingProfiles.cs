@@ -23,6 +23,17 @@ namespace TestingHTTPie.Helper
                 .ForMember(dest => dest.Hobby, opt => opt.MapFrom(src => src.Hobby))
                 .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.Person));
 
+            CreateMap<Hobby, HobbyDto>()
+                .ForMember(dest => dest.Persons, opt => opt.Condition((src, dest, srcMember, context) =>
+                {
+                    // Only map Persons if the source is not coming from HobbyPerson
+                    if (context.Items.TryGetValue("SourceType", out var sourceType) && sourceType is Type type)
+                    {
+                        return type != typeof(HobbyPerson);
+                    }
+                    return true;
+                }));
+
         }
     }
 }
