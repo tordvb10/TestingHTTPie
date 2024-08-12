@@ -17,6 +17,8 @@ namespace TestingHTTPie.Helper
 
             CreateMap<Person, PersonDtoBase>();
             CreateMap<Person, PersonDto>()
+                .ForMember(dest => dest.Hobbies,
+                    opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Hobby)))
                 .ReverseMap()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());

@@ -40,18 +40,26 @@ namespace TestingHTTPie.Repositories
 
         public async Task<bool> DeletePersonAsync(Person person)
         {
+
+            var hobbypersons = await _contextTestingHTTPie.HobbyPersons
+                .Where(hp => hp.PersonId == person.Id)
+                .ToListAsync();
+            _contextTestingHTTPie.HobbyPersons.RemoveRange(hobbypersons);
             _contextTestingHTTPie.Persons.Remove(person);
             return await SaveAsync();
         }
 
         public async Task<ICollection<Person>> GetPersonsAsync()
         {
-            return await _contextTestingHTTPie.Persons.ToListAsync();
+            return await _contextTestingHTTPie.Persons
+                .Include(h => h.HobbyPersons).ThenInclude(hp => hp.Hobby)
+                .ToListAsync();
         }
 
         public async Task<Person> GetPersonAsync(Guid id)
         {
             return await _contextTestingHTTPie.Persons
+                .Include(h => h.HobbyPersons).ThenInclude(hp => hp.Hobby)
                 .FirstOrDefaultAsync(e => e.Id == id)
                 ?? throw new InvalidOperationException($"Entity with id '{id}' not found.");
         }

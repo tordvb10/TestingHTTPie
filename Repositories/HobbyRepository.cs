@@ -43,9 +43,6 @@ namespace TestingHTTPie.Repositories
             var hobbypersons = await _contextTestingHTTPie.HobbyPersons
                 .Where(hp => hp.HobbyId == hobby.Id)
                 .ToListAsync();
-            Console.WriteLine("HEIHEIHEIHEIHEIHEI");
-            Console.WriteLine(hobbypersons);
-            Console.WriteLine(hobby);
             _contextTestingHTTPie.HobbyPersons.RemoveRange(hobbypersons);
             _contextTestingHTTPie.Hobbies.Remove(hobby);
             return await SaveAsync();
