@@ -1,0 +1,9 @@
+@HostAddress = http://localhost:5043
+
+POST {{HostAddress}}/api/Hobby
+Accept: */*
+Content-Type: application/json-patch+json
+
+{
+  "activity": "dance"
+}

@@ -1,0 +1,10 @@
+@HostAddress = http://localhost:5043
+
+POST {{HostAddress}}/api/Person
+Accept: */*
+Content-Type: application/json-patch+json
+
+{
+  "firstName": "first",
+  "lastName": "third"
+}

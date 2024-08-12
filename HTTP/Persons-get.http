@@ -1,0 +1,6 @@
+@HostAddress = http://localhost:5043
+
+GET {{HostAddress}}/api/Person
+Accept: */*
+Content-Type: application/json-patch+json
+
