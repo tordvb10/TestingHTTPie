@@ -142,12 +142,15 @@ namespace TestingHTTPie.Repositories
                 .Include(hp => hp.Person)
                 .FirstOrDefaultAsync(hp => hp.HobbyId == hobbyId && hp.PersonId == personId);
 
-            
-                //.Include(h => h.HobbyPersons).ThenInclude(hp => hp.Person)
-                //.FirstOrDefaultAsync(e => e.Id == id)
-
         }
 
+        public async Task<ICollection<HobbyPerson>> GetRelHobbyPersonsAsync()
+        {
+            return await _contextTestingHTTPie.HobbyPersons
+                .Include(hp => hp.Hobby)
+                .Include(hp => hp.Person)
+                .ToListAsync();
+        }
 
     }
 }

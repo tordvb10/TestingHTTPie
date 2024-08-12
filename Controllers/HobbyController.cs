@@ -125,6 +125,16 @@ namespace TestingHTTPie.Controllers
 
 
         [HttpGet("Person")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<HobbyPersonDto>))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetHobbyPersons()
+        {
+            var getHobbyPersons = await _hobbyRepository.GetRelHobbyPersonsAsync();
+            var getHobbyPersonsDto = _mapper.Map<ICollection<HobbyPerson>,List<HobbyPersonDto>>(getHobbyPersons);
+            return (!ModelState.IsValid) ? BadRequest(ModelState) : Ok(getHobbyPersonsDto);
+        }
 
 
         [HttpGet("Person/{hobbyId}/{personId}")]
