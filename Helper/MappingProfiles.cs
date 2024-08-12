@@ -7,6 +7,7 @@ namespace TestingHTTPie.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<Hobby, HobbyDtoBase>();
             CreateMap<Hobby, HobbyDto>()
                 .ForMember(dest => dest.Persons, 
                     opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Person)))
@@ -14,6 +15,7 @@ namespace TestingHTTPie.Helper
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
+            CreateMap<Person, PersonDtoBase>();
             CreateMap<Person, PersonDto>()
                 .ReverseMap()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
@@ -24,7 +26,8 @@ namespace TestingHTTPie.Helper
                 .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.Person));
 
 
-           
+
+
         }
     }
 }

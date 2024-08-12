@@ -1,0 +1,9 @@
+@HostAddress = http://localhost:5043
+
+@hobbyId = 6674304F-CEA6-43D1-AC23-44A1D9EC3B1A
+@personId = 07768F0C-0975-4C37-A817-21F62B754B4E
+
+GET {{HostAddress}}/api/Hobby/Person/{{hobbyId}}/{{personId}}
+Accept: */*
+Content-Type: application/json-patch+json
+

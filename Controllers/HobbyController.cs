@@ -139,13 +139,8 @@ namespace TestingHTTPie.Controllers
             if (!await _personRepository.PersonExistsAsync(personId)) return NotFound("Person not found.");
             if (!await _hobbyRepository.HobbyPersonExistsAsync(hobbyId,personId)) return NotFound("HobbyPerson not found.");
             var getHobbyPerson = await _hobbyRepository.GetRelHobbyPersonAsync(hobbyId, personId);
-            Console.WriteLine("HEIHEIHEIHEIHEIHEI");
-            Console.WriteLine(getHobbyPerson);
-            Console.WriteLine("HEIHEIHEIHEIHEIHEI2222222");
-            var getHobbyPersonDto = _mapper.Map<HobbyPersonDto>(getHobbyPerson, opt => opt.Items["SourceType"] = typeof(HobbyPerson));
-
+            var getHobbyPersonDto = _mapper.Map<HobbyPersonDto>(getHobbyPerson);
             return Ok(getHobbyPersonDto);
-
         }
 
 
