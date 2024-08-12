@@ -47,7 +47,7 @@ namespace TestingHTTPie.Controllers
                 .FirstOrDefault();
             if (createPersonExists != null)
             {
-                ModelState.AddModelError("", "Employee already exists.");
+                ModelState.AddModelError("", "Person already exists.");
                 return StatusCode(422, ModelState);
             }
             var createPerson = _mapper.Map<PersonDto, Person>(createPersonDto);
@@ -71,7 +71,7 @@ namespace TestingHTTPie.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (!await _personRepository.DeletePersonAsync(deletePerson))
             {
-                ModelState.AddModelError("", "Something went wrong while deleting Employee.");
+                ModelState.AddModelError("", "Something went wrong while deleting Person.");
                 return BadRequest(ModelState);
             }
             return NoContent();
@@ -112,7 +112,7 @@ namespace TestingHTTPie.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred while updating the Employee: {ex.Message}");
+                return StatusCode(500, $"An error occurred while updating the Person: {ex.Message}");
             }
         }
 

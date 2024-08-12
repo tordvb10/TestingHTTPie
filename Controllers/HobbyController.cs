@@ -76,7 +76,7 @@ namespace TestingHTTPie.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             if (!await _hobbyRepository.DeleteHobbyAsync(deleteHobby))
             {
-                ModelState.AddModelError("", "Something went wrong while deleting Employee.");
+                ModelState.AddModelError("", "Something went wrong while deleting Hobby.");
                 return BadRequest(ModelState);
             }
             return NoContent();
@@ -119,7 +119,7 @@ namespace TestingHTTPie.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred while updating the Employee: {ex.Message}");
+                return StatusCode(500, $"An error occurred while updating the Hobby: {ex.Message}");
             }
         }
 
@@ -134,6 +134,23 @@ namespace TestingHTTPie.Controllers
             var getHobbyPersons = await _hobbyRepository.GetRelHobbyPersonsAsync();
             var getHobbyPersonsDto = _mapper.Map<ICollection<HobbyPerson>,List<HobbyPersonDto>>(getHobbyPersons);
             return (!ModelState.IsValid) ? BadRequest(ModelState) : Ok(getHobbyPersonsDto);
+        }
+
+
+        [HttpDelete("Person/{hobbyId}/{personId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeleteHobbyPerson(Guid hobbyId, Guid personId)
+        {
+            if (!await _hobbyRepository.HobbyPersonExistsAsync(hobbyId,personId)) return NotFound("HobbyPerson not found.");
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!await _hobbyRepository.RemoveRelHobbyPersonAsync(hobbyId,personId))
+            {
+                ModelState.AddModelError("", "Something went wrong while deleting HobbyPerson.");
+                return BadRequest(ModelState);
+            }
+            return NoContent();
         }
 
 
