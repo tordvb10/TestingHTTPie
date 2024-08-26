@@ -39,7 +39,7 @@ namespace TestingHTTPie.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(422)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreatePerson([FromBody] PersonDto createPersonDto)
+        public async Task<IActionResult> CreatePerson([FromBody] PersonDtoBase createPersonDto)
         {
             if (createPersonDto == null | !ModelState.IsValid) return BadRequest(ModelState);
             var createPersonExists = (await _personRepository.GetPersonsAsync())
@@ -50,7 +50,7 @@ namespace TestingHTTPie.Controllers
                 ModelState.AddModelError("", "Person already exists.");
                 return StatusCode(422, ModelState);
             }
-            var createPerson = _mapper.Map<PersonDto, Person>(createPersonDto);
+            var createPerson = _mapper.Map<PersonDtoBase, Person>(createPersonDto);
             if (!await _personRepository.CreatePersonAsync(createPerson))
             {
                 ModelState.AddModelError("", "Something went wrong while saving.");
@@ -95,7 +95,7 @@ namespace TestingHTTPie.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdatePerson(Guid personId, [FromBody] PersonDto updateNEWPersonDto)
+        public async Task<IActionResult> UpdatePerson(Guid personId, [FromBody] PersonDtoBase updateNEWPersonDto)
         {
             try
             {

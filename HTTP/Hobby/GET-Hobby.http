@@ -1,9 +1,7 @@
 @HostAddress = http://localhost:5043
+@hobbyId = DC48FE9D-348C-4510-BF2D-B211AB481604
 
-POST {{HostAddress}}/api/Hobby
+GET {{HostAddress}}/api/Hobby/{{hobbyId}}
 Accept: */*
 Content-Type: application/json-patch+json
 
-{
-  "activity": "dating"
-}

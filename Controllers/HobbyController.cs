@@ -44,7 +44,7 @@ namespace TestingHTTPie.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(422)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateHobby([FromBody] HobbyDto createHobbyDto)
+        public async Task<IActionResult> CreateHobby([FromBody] HobbyDtoBase createHobbyDto)
         {
             if (createHobbyDto == null | !ModelState.IsValid) return BadRequest(ModelState);
             var createHobbyExists = (await _hobbyRepository.GetHobbiesAsync())
@@ -55,7 +55,7 @@ namespace TestingHTTPie.Controllers
                 ModelState.AddModelError("", "Hobby already exists.");
                 return StatusCode(422, ModelState);
             }
-            var createHobby = _mapper.Map<HobbyDto, Hobby>(createHobbyDto);
+            var createHobby = _mapper.Map<HobbyDtoBase, Hobby>(createHobbyDto);
             if (!await _hobbyRepository.CreateHobbyAsync(createHobby))
             {
                 ModelState.AddModelError("", "Something went wrong while saving.");
@@ -102,7 +102,7 @@ namespace TestingHTTPie.Controllers
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdateHobby(Guid hobbyId, [FromBody] HobbyDto updateNEWHobbyDto)
+        public async Task<IActionResult> UpdateHobby(Guid hobbyId, [FromBody] HobbyDtoBase updateNEWHobbyDto)
         {
             try
             {

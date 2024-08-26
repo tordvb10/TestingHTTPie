@@ -7,19 +7,29 @@ namespace TestingHTTPie.Helper
     {
         public MappingProfiles()
         {
-            CreateMap<Hobby, HobbyDtoBase>();
+            CreateMap<Hobby, HobbyDtoBase>()
+                .ReverseMap()
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.RowVersion, opt => opt.Ignore()); ;
             CreateMap<Hobby, HobbyDto>()
                 .ForMember(dest => dest.Persons, 
                     opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Person)))
                 .ReverseMap()
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            CreateMap<Person, PersonDtoBase>();
+            CreateMap<Person, PersonDtoBase>()
+                .ReverseMap()
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.RowVersion, opt => opt.Ignore()); ;
             CreateMap<Person, PersonDto>()
                 .ForMember(dest => dest.Hobbies,
                     opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Hobby)))
                 .ReverseMap()
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
