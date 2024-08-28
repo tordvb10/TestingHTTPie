@@ -11,6 +11,9 @@ namespace TestingHTTPie.Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<HobbyPerson> HobbyPersons { get; set; }
 
+        public DbSet<FileModel> Files { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
