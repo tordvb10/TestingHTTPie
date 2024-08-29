@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TestingHTTPie.Dto;
 using TestingHTTPie.Models;
+using TestingHTTPie.Models.Base;
 namespace TestingHTTPie.Helper
 {
 
@@ -8,7 +9,7 @@ namespace TestingHTTPie.Helper
     {
         public static IMappingExpression<Tsource,TDestination> IgnoreCommenPropterties<Tsource, TDestination>(
             this IMappingExpression<Tsource, TDestination> mapping)
-            where TDestination : ICommonProps
+            where TDestination : ICommonProperties
         {
             return mapping
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -23,17 +24,13 @@ namespace TestingHTTPie.Helper
         {
             CreateMap<Hobby, HobbyDtoBase>()
                 .ReverseMap()
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+                .IgnoreCommenPropterties();
 
             CreateMap<Hobby, HobbyDto>()
                 .ForMember(dest => dest.Persons, 
                     opt => opt.MapFrom(src => src.HobbyPersons.Select(hp => hp.Person)))
                 .ReverseMap()
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+                .IgnoreCommenPropterties();
 
             CreateMap<Person, PersonDtoBase>()
                 .ReverseMap()
@@ -49,6 +46,14 @@ namespace TestingHTTPie.Helper
                 .ForMember(dest => dest.Hobby, opt => opt.MapFrom(src => src.Hobby))
                 .ForMember(dest => dest.Person, opt => opt.MapFrom(src => src.Person));
 
+
+            CreateMap<FileModel, FileModelDtoBase>()
+                .ReverseMap()
+                .IgnoreCommenPropterties();
+
+            CreateMap<FileModel, FileModelDto>()
+                .ReverseMap()
+                .IgnoreCommenPropterties();
 
 
 
