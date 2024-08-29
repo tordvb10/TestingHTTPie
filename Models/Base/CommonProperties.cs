@@ -10,3 +10,4 @@ namespace TestingHTTPie.Models.Base
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
     }
+}

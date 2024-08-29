@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TestingHTTPie.Models.Base
+
+using TestingHTTPie.Models.Base;
 namespace TestingHTTPie.Models
 {
     public class Hobby : CommonProperties
