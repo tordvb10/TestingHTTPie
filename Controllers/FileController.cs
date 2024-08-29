@@ -42,6 +42,8 @@ namespace TestingHTTPie.Controllers
                 await file.CopyToAsync(memoryStream);
                 fileModel.Data = memoryStream.ToArray();
             }
+            
+            Console.WriteLine(fileModel.FileName);
 
             _context.Files.Add(fileModel);
             await _context.SaveChangesAsync();
@@ -51,7 +53,7 @@ namespace TestingHTTPie.Controllers
 
         // GET: api/files/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetFile(int id)
+        public async Task<IActionResult> GetFile(Guid id)
         {
             var fileModel = await _context.Files.FindAsync(id);
 

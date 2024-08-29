@@ -25,6 +25,9 @@ namespace TestingHTTPie.Data
             modelBuilder.Entity<Hobby>()
                 .HasKey(h => h.Id);
 
+            modelBuilder.Entity<FileModel>()
+                .HasKey(f => f.Id);
+
 
             modelBuilder.Entity<HobbyPerson>(entity =>
             {
