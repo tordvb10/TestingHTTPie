@@ -18,16 +18,27 @@ namespace TestingHTTPie.Data
         {
 
             // Person id-Key
-            modelBuilder.Entity<Person>()
-                .HasKey(p => p.Id);
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.RowVersion)
+                .IsRowVersion();
+            });
 
             // Employee id-Key
-            modelBuilder.Entity<Hobby>()
-                .HasKey(h => h.Id);
+            modelBuilder.Entity<Hobby>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.RowVersion)
+                .IsRowVersion();
+            });
 
-            modelBuilder.Entity<FileModel>()
-                .HasKey(f => f.Id);
-
+            modelBuilder.Entity<FileModel>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.RowVersion)
+                .IsRowVersion();
+            });
 
             modelBuilder.Entity<HobbyPerson>(entity =>
             {
@@ -42,6 +53,8 @@ namespace TestingHTTPie.Data
                       .HasForeignKey(hp => hp.PersonId);
 
             });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
