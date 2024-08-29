@@ -1,3 +1,4 @@
+using TestingHTTPie.Dto.Base;
 namespace TestingHTTPie.Dto
 {
     public class PersonDto : PersonDtoBase
@@ -5,15 +6,9 @@ namespace TestingHTTPie.Dto
         public ICollection<HobbyDtoBase> Hobbies { get; set; }
     }
 
-    public class PersonDtoBase
+    public class PersonDtoBase : CommonPropertiesDto
     {
-        public Guid Id { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
     }
 }

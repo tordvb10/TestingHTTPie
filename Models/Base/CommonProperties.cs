@@ -1,3 +1,4 @@
+using System;
 namespace TestingHTTPie.Models.Base
 {
     public class CommonProperties : ICommonProperties
@@ -7,5 +8,5 @@ namespace TestingHTTPie.Models.Base
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+
     }
-}

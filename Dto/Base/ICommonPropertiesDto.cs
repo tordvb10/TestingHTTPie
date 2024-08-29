@@ -1,10 +1,9 @@
 namespace TestingHTTPie.Dto.Base
 {
-    public class interface ICommonPropertiesDto
+    public interface ICommonPropertiesDto
     {
-        public Guid Id { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        Guid Id { get; set; }
+        DateTime CreatedAt { get; set; }
+        DateTime UpdatedAt { get; set; }
     }
 }
