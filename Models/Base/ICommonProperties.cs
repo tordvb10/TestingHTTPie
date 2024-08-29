@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-
-namespace TestingHTTPie.Models
+namespace TestingHTTPie.Models.Base
 {
-    public interface ICommonProps
+    public interface ICommonProperties
     {
         public Guid Id { get; set; }
         public byte[] RowVersion { get; set; }
