@@ -63,12 +63,16 @@ namespace TestingHTTPie.Migrations
                 name: "HobbyPersons",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     HobbyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HobbyPersons", x => new { x.HobbyId, x.PersonId });
+                    table.PrimaryKey("PK_HobbyPersons", x => x.Id);
                     table.ForeignKey(
                         name: "FK_HobbyPersons_Hobbies_HobbyId",
                         column: x => x.HobbyId,
@@ -82,6 +86,11 @@ namespace TestingHTTPie.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HobbyPersons_HobbyId",
+                table: "HobbyPersons",
+                column: "HobbyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HobbyPersons_PersonId",

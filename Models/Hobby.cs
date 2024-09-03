@@ -7,7 +7,7 @@ namespace TestingHTTPie.Models
     {
         public string Activity { get; set; }
 
-        public ICollection<HobbyPerson> HobbyPersons { get; set; }
+        public ICollection<HobbyPerson> HobbyPersons { get; set; } = new List<HobbyPerson>();
 
     }
 }

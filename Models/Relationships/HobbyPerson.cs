@@ -1,6 +1,8 @@
+using TestingHTTPie.Models.Base;
+
 namespace TestingHTTPie.Models
 {
-    public class HobbyPerson
+    public class HobbyPerson : CommonProperties
     {
         public Guid HobbyId { get; set; }
         public Hobby Hobby { get; set; }

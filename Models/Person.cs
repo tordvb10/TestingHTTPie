@@ -6,7 +6,7 @@ namespace TestingHTTPie.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        public ICollection<HobbyPerson> HobbyPersons { get; set; }
+        public ICollection<HobbyPerson> HobbyPersons { get; set; } = new List<HobbyPerson>();
 
     }
 }

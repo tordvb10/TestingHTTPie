@@ -12,7 +12,7 @@ using TestingHTTPie.Data;
 namespace TestingHTTPie.Migrations
 {
     [DbContext(typeof(ContextTestingHTTPie))]
-    [Migration("20240903085018_InitialCreate")]
+    [Migration("20240903122229_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -89,13 +89,31 @@ namespace TestingHTTPie.Migrations
 
             modelBuilder.Entity("TestingHTTPie.Models.HobbyPerson", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("HobbyId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("HobbyId", "PersonId");
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HobbyId");
 
                     b.HasIndex("PersonId");
 
